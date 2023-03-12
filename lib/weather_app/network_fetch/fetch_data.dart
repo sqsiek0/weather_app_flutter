@@ -7,7 +7,7 @@ class Network {
     // var link =
     //     "http://api.openweathermap.org/data/2.5/forecast?q=$lat&units=metric&appid=b919d40ede2a4ef309dc3fd74d6fef94";
     final response = await http.get(Uri.parse(
-        "http://api.openweathermap.org/data/2.5/forecast?q=$name&appid=b919d40ede2a4ef309dc3fd74d6fef94"));
+        "http://api.openweathermap.org/data/2.5/forecast?q=$name&units=metric&appid=b919d40ede2a4ef309dc3fd74d6fef94"));
 
     if (response.statusCode == 200) {
       // List<dynamic> jsonResponse = jsonDecode(response.body);

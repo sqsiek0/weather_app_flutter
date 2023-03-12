@@ -41,7 +41,6 @@ class _WeatherAppState extends State<WeatherApp> {
                   ],
                 );
               } else if (snapshot.hasError) {
-                print(snapshot.error);
                 throw Exception(snapshot.error);
               }
               return const CircularProgressIndicator();
@@ -61,20 +60,12 @@ class _WeatherAppState extends State<WeatherApp> {
         fontSize: 15);
 
     const InputDecoration inputDecLen = InputDecoration(
-      hintText: 'Latitude',
+      hintText: 'City',
       border: InputBorder.none,
       filled: true,
       fillColor: lightBlue,
       hintStyle: TextStyle(color: Colors.white60),
     );
-
-    // const InputDecoration inputDecLen2 = InputDecoration(
-    //   hintText: 'Longitude',
-    //   border: InputBorder.none,
-    //   filled: true,
-    //   fillColor: lightBlue,
-    //   hintStyle: TextStyle(color: Colors.white60),
-    // );
 
     return Container(
       alignment: Alignment.topCenter,
@@ -85,7 +76,7 @@ class _WeatherAppState extends State<WeatherApp> {
             const Padding(
               padding: EdgeInsets.symmetric(vertical: 10),
               child: Text(
-                "Enter the coordinates!",
+                "Enter the city!",
                 style: TextStyle(
                     color: Color.fromARGB(240, 255, 255, 255),
                     fontSize: 20,
@@ -104,7 +95,6 @@ class _WeatherAppState extends State<WeatherApp> {
                         onSubmitted: (value) {
                           setState(() {
                             cityName = value;
-                            print(value);
                             futureData = Network().fetchData(name: cityName);
                           });
                           // print(lat);
@@ -113,37 +103,6 @@ class _WeatherAppState extends State<WeatherApp> {
                         decoration: inputDecLen),
                   ),
                 ),
-                // Spacer(),
-                // ClipRRect(
-                //   borderRadius: BorderRadius.circular(12),
-                //   child: SizedBox(
-                //     width: MediaQuery.of(context).size.width / 3,
-                //     child: TextField(
-                //       keyboardType: TextInputType.number,
-                //       onSubmitted: (value) {
-                //         // changeValue(value, 1);
-                //         // setState(() {
-                //         //   lon = double.tryParse(value)!;
-                //         //   print(lon);
-                //         //   // futureData = Network().fetchData(lat: lat, lon: lon);
-                //         // });
-                //       },
-                //       decoration: inputDecLen2,
-                //       style: inputStyle,
-                //     ),
-                //   ),
-                // ),
-                // TextButton(
-                //     onPressed: () {
-                //       setState(() {
-                //         futureData = Network().fetchData(lat: lat);
-                //         print(futureData);
-                //         const SnackBar(
-                //           content: Text("Spróbuj ponownie"),
-                //         );
-                //       });
-                //     },
-                //     child: Text("Klik"))
               ],
             ),
           ],
@@ -153,6 +112,10 @@ class _WeatherAppState extends State<WeatherApp> {
   }
 
   Widget mainWeatherInfo(BuildContext context, MyWeatherClass snapshot) {
+    Color blacktext = const Color(0xff273438).withAlpha(200);
+    String iconLink =
+        (snapshot.list[0].weather[0].icon).replaceAll(RegExp(r'n'), 'd');
+
     return Padding(
       padding: const EdgeInsets.only(top: 30),
       child: Align(
@@ -165,13 +128,82 @@ class _WeatherAppState extends State<WeatherApp> {
                 borderRadius: BorderRadiusDirectional.circular(30)),
             child: Align(
               alignment: Alignment.topCenter,
-              child: Row(
+              child: Column(
                 children: [
-                  // const Icon(Icons.near_me),
-                  const SizedBox(
-                    width: 5,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 15, left: 20),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.near_me,
+                              color: blacktext,
+                              size: 18,
+                            ),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            Text(
+                              "${snapshot.city.name}, ${snapshot.city.country}",
+                              style: TextStyle(color: blacktext),
+                            )
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 15, right: 20),
+                        child: Icon(
+                          Icons.settings,
+                          color: blacktext,
+                          size: 22,
+                        ),
+                      ),
+                    ],
                   ),
-                  Text("${snapshot.city.name}, ${snapshot.city.country}")
+                  Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Align(
+                            alignment: Alignment.centerLeft,
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 50, top: 20),
+                              child: Text(
+                                "${snapshot.list[0].main.temp.toStringAsFixed(0)}",
+                                style: TextStyle(
+                                    fontSize: 75,
+                                    fontWeight: FontWeight.bold,
+                                    color: blacktext.withAlpha(240)),
+                              ),
+                            )),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 15),
+                          child: Image.network(
+                            "http://openweathermap.org/img/wn/$iconLink@2x.png",
+                            width: 200,
+                            // height: 250,
+                            fit: BoxFit.contain,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  // Align(
+                  //   alignment: Alignment.centerLeft,
+                  //   child: Padding(
+                  //     padding: const EdgeInsets.symmetric(
+                  //         vertical: 20, horizontal: 50),
+                  //     child: Text(
+                  //       "°C",
+                  //       style: TextStyle(
+                  //           color: blacktext,
+                  //           fontSize: 25,
+                  //           fontWeight: FontWeight.w600),
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ),
