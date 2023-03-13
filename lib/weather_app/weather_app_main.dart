@@ -164,46 +164,50 @@ class _WeatherAppState extends State<WeatherApp> {
                   ),
                   Expanded(
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Align(
                             alignment: Alignment.centerLeft,
                             child: Padding(
                               padding: const EdgeInsets.only(left: 50, top: 20),
-                              child: Text(
-                                "${snapshot.list[0].main.temp.toStringAsFixed(0)}",
-                                style: TextStyle(
-                                    fontSize: 75,
-                                    fontWeight: FontWeight.bold,
-                                    color: blacktext.withAlpha(240)),
+                              child: Container(
+                                alignment: Alignment.topCenter,
+                                child: RichText(
+                                  text: TextSpan(
+                                      text: snapshot.list[0].main.temp
+                                          .toStringAsFixed(0),
+                                      style: TextStyle(
+                                        fontSize: 95,
+                                        fontWeight: FontWeight.bold,
+                                        color: blacktext.withAlpha(240),
+                                      ),
+                                      children: [
+                                        TextSpan(
+                                            text: '°C',
+                                            style: TextStyle(
+                                              fontSize: 20,
+                                              color: blacktext,
+                                              textBaseline:
+                                                  TextBaseline.ideographic,
+                                            )),
+                                      ]),
+                                ),
                               ),
                             )),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 15),
-                          child: Image.network(
-                            "http://openweathermap.org/img/wn/$iconLink@2x.png",
-                            width: 200,
-                            // height: 250,
-                            fit: BoxFit.contain,
+                        Container(
+                          alignment: Alignment.bottomRight,
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 15),
+                            child: Image.network(
+                              "http://openweathermap.org/img/wn/$iconLink@2x.png",
+                              width: 180,
+                              fit: BoxFit.fill,
+                            ),
                           ),
                         )
                       ],
                     ),
                   ),
-                  // Align(
-                  //   alignment: Alignment.centerLeft,
-                  //   child: Padding(
-                  //     padding: const EdgeInsets.symmetric(
-                  //         vertical: 20, horizontal: 50),
-                  //     child: Text(
-                  //       "°C",
-                  //       style: TextStyle(
-                  //           color: blacktext,
-                  //           fontSize: 25,
-                  //           fontWeight: FontWeight.w600),
-                  //     ),
-                  //   ),
-                  // ),
                 ],
               ),
             ),
