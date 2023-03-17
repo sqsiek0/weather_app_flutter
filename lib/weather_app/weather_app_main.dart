@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:testing_cz2/weather_app/weather_class/weather_json_class.dart';
+import '../ui/data_under_white_block.dart';
 import '../ui/main_view_white_block.dart';
 import 'network_fetch/fetch_data.dart';
 
@@ -15,8 +16,6 @@ class _WeatherAppState extends State<WeatherApp> {
   String cityName = "London";
   final Color lightBlue = const Color(0xff3e95fe);
   final Color deepBlue = const Color(0xff0660fc);
-  double lat = 15;
-  double lon = 13;
 
   @override
   void initState() {
@@ -29,48 +28,27 @@ class _WeatherAppState extends State<WeatherApp> {
     return Scaffold(
       backgroundColor: deepBlue,
       body: ListView(
-        shrinkWrap: true,
         children: [
-          textInputCords(),
-          SizedBox(
-            height: MediaQuery.of(context).size.height / 2,
-            child: Stack(children: [
+          Column(
+            children: [
+              textInputCords(),
               FutureBuilder(
                 future: futureData,
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   // MyWeatherClass weatherInfo = snapshot.data;
                   if (snapshot.hasData) {
-                    return Column(
-                      children: [
-                        Stack(children: [
-                          mainWeatherInfo(context, snapshot.data),
-                        ]),
-                      ],
-                    );
+                    return Stack(children: [
+                      moreWeatherData(context, snapshot.data),
+                      mainWeatherInfo(context, snapshot.data),
+                    ]);
                   } else if (snapshot.hasError) {
                     throw Exception(snapshot.error);
                   }
                   return const CircularProgressIndicator();
                 },
               ),
-              Positioned.directional(
-                  textDirection: TextDirection.ltr,
-                  top: 230,
-                  child: Container(
-                    width: MediaQuery.of(context).size.width * 0.65,
-                    height: 200,
-                    color: Colors.amber,
-                  ))
-            ]),
+            ],
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 100),
-            child: Container(
-              width: double.infinity,
-              height: 200,
-              color: Colors.black,
-            ),
-          )
         ],
       ),
     );
