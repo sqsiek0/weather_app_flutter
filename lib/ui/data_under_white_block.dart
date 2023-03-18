@@ -199,7 +199,7 @@ Widget moreWeatherData(BuildContext context, MyWeatherClass snapshot) {
                   Text(
                     "m/s",
                     style: styleOfZnak,
-                  )
+                  ),
                 ],
               )
             ],

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:testing_cz2/weather_app/weather_class/weather_json_class.dart';
 import '../ui/data_under_white_block.dart';
 import '../ui/main_view_white_block.dart';
+import '../ui/weather_time_day.dart';
 import 'network_fetch/fetch_data.dart';
 
 class WeatherApp extends StatefulWidget {
@@ -37,10 +38,16 @@ class _WeatherAppState extends State<WeatherApp> {
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   // MyWeatherClass weatherInfo = snapshot.data;
                   if (snapshot.hasData) {
-                    return Stack(children: [
-                      moreWeatherData(context, snapshot.data),
-                      mainWeatherInfo(context, snapshot.data),
-                    ]);
+                    return Wrap(
+                      alignment: WrapAlignment.center,
+                      children: [
+                        Stack(children: [
+                          moreWeatherData(context, snapshot.data),
+                          mainWeatherInfo(context, snapshot.data),
+                        ]),
+                        weatherByTimeAndDay(data: snapshot.data,),
+                      ],
+                    );
                   } else if (snapshot.hasError) {
                     throw Exception(snapshot.error);
                   }
