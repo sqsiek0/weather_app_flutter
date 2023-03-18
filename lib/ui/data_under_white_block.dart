@@ -25,135 +25,186 @@ Widget moreWeatherData(BuildContext context, MyWeatherClass snapshot) {
       margin: const EdgeInsets.only(top: 240),
       width: MediaQuery.of(context).size.width * 0.70,
       height: 200,
-      child: Padding(
+      child: GridView.count(
+        crossAxisSpacing: MediaQuery.of(context).size.width * 0.15,
+        mainAxisSpacing: 5,
+        crossAxisCount: 2,
+        childAspectRatio: 6,
         padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 50),
-        child: Row(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Humidity",
-                  style: styleOfText,
-                ),
-                Text(
-                  "Clouds",
-                  style: styleOfText,
-                ),
-                Text(
-                  "cos",
-                  style: styleOfText,
-                ),
-                Text(
-                  "cos",
-                  style: styleOfText,
-                )
-              ],
-            ),
-            space,
-            Column(
-              children: [
-                Text(
-                  data.main.humidity.toString(),
-                  style: styleOfNumber,
-                ),
-                Text(
-                  data.clouds.all.toString(),
-                  style: styleOfNumber,
-                ),
-                Text(
-                  "cos",
-                  style: styleOfNumber,
-                ),
-                Text(
-                  "cos",
-                  style: styleOfNumber,
-                )
-              ],
-            )
-          ],
-        ),
-        // child: Column(
-        //   children: [
-        //     Row(
-        //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //       children: [
-        //         Row(
-        //           mainAxisAlignment: MainAxisAlignment.spaceAround,
-        //           children: [
-        //             Text("Humidity", style: styleOfText),
-        //             space,
-        //             Text(
-        //               "${data.main.humidity}",
-        //               style: styleOfNumber,
-        //             ),
-        //             spaceZnak,
-        //             Text(
-        //               "%",
-        //               style: styleOfZnak,
-        //             )
-        //           ],
-        //         ),
-        //         Row(
-        //           children: [
-        //             Text(
-        //               "Maximum Temperature",
-        //               style: styleOfText,
-        //             ),
-        //             space,
-        //             Text(
-        //               data.main.tempMax.toStringAsFixed(0),
-        //               style: styleOfNumber,
-        //             ),
-        //             spaceZnak,
-        //             Text(
-        //               "°C",
-        //               style: styleOfZnak,
-        //             )
-        //           ],
-        //         )
-        //       ],
-        //     ),
-        //     Row(
-        //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //       children: [
-        //         Row(
-        //           children: [
-        //             Text(
-        //               "Clouds",
-        //               style: styleOfText,
-        //             ),
-        //             space,
-        //             Text(
-        //               data.clouds.all.toString(),
-        //               style: styleOfNumber,
-        //             ),
-        //             spaceZnak,
-        //             Text(
-        //               "%",
-        //               style: styleOfZnak,
-        //             )
-        //           ],
-        //         ),
-        //         Row(
-        //           children: [
-        //             Text(
-        //               "Raining",
-        //               style: styleOfText,
-        //             ),
-        //             space,
-        //             isRaining(data.rain?.the3H, styleOfNumber),
-        //             spaceZnak,
-        //             Text(
-        //               "mm/3h",
-        //               style: styleOfZnak,
-        //             ),
-        //           ],
-        //         )
-        //       ],
-        //     ),
-        //   ],
-        // ),
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "Humidity",
+                style: styleOfText,
+              ),
+              Text(
+                data.main.humidity.toString(),
+                style: styleOfNumber,
+              ),
+            ],
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "Feels like",
+                style: styleOfText,
+              ),
+              Wrap(
+                crossAxisAlignment: WrapCrossAlignment.end,
+                children: [
+                  Text(
+                    data.main.feelsLike.toStringAsFixed(0),
+                    style: styleOfNumber,
+                  ),
+                  Text(
+                    "°C",
+                    style: styleOfZnak,
+                  )
+                ],
+              )
+            ],
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "Clouds",
+                style: styleOfText,
+              ),
+              Wrap(
+                crossAxisAlignment: WrapCrossAlignment.end,
+                children: [
+                  Text(
+                    data.clouds.all.toString(),
+                    style: styleOfNumber,
+                  ),
+                  Text(
+                    "%",
+                    style: styleOfZnak,
+                  ),
+                ],
+              )
+            ],
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "MinTemp",
+                style: styleOfText,
+              ),
+              Wrap(
+                crossAxisAlignment: WrapCrossAlignment.end,
+                children: [
+                  Text(
+                    data.main.tempMin.toStringAsFixed(0),
+                    style: styleOfNumber,
+                  ),
+                  Text(
+                    "°C",
+                    style: styleOfZnak,
+                  )
+                ],
+              )
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                "Rain",
+                style: styleOfText,
+              ),
+              Wrap(
+                crossAxisAlignment: WrapCrossAlignment.end,
+                children: [
+                  isRaining(data.rain?.the3H, styleOfNumber),
+                  Text(
+                    "mm",
+                    style: styleOfZnak,
+                  )
+                ],
+              )
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                "MaxTemp",
+                style: styleOfText,
+              ),
+              Wrap(
+                crossAxisAlignment: WrapCrossAlignment.end,
+                children: [
+                  Text(
+                    data.main.tempMax.toStringAsFixed(0),
+                    style: styleOfNumber,
+                  ),
+                  Text(
+                    "°C",
+                    style: styleOfZnak,
+                  )
+                ],
+              )
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                "PropOfRain",
+                style: styleOfText,
+              ),
+              Wrap(
+                crossAxisAlignment: WrapCrossAlignment.end,
+                children: [
+                  Text(
+                    (data.pop * 100).toStringAsFixed(0),
+                    style: styleOfNumber,
+                  ),
+                  Text(
+                    "%",
+                    style: styleOfZnak,
+                  )
+                ],
+              )
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                "Wind",
+                style: styleOfText,
+              ),
+              Wrap(
+                crossAxisAlignment: WrapCrossAlignment.end,
+                children: [
+                  Text(
+                    data.wind.speed.toStringAsFixed(1),
+                    style: styleOfNumber,
+                  ),
+                  Text(
+                    "m/s",
+                    style: styleOfZnak,
+                  )
+                ],
+              )
+            ],
+          ),
+        ],
       ),
     ),
   );
@@ -168,6 +219,7 @@ Text isRaining(double? the3h, TextStyle styleOfNumber) {
   } else {
     return Text(
       "$the3h",
+      style: styleOfNumber,
     );
   }
 }
