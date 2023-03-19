@@ -31,12 +31,15 @@ class _weatherByTimeAndDayState extends State<weatherByTimeAndDay> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  const Text("24h/5d"),
-                  const SizedBox(
-                    width: 10,
-                  ),
                   FlutterSwitch(
                     value: state,
+                    activeColor: const Color(0xff0660fc),
+                    inactiveColor: const Color(0xff0660fc),
+                    width: 80,
+                    activeText: "24h",
+                    inactiveText: "5d",
+                    valueFontSize: 14,
+                    showOnOff: true,
                     onToggle: (value) {
                       setState(() {
                         state = value;
@@ -45,11 +48,23 @@ class _weatherByTimeAndDayState extends State<weatherByTimeAndDay> {
                   ),
                 ],
               ),
-              Center(child: Text(state.toString())),
+              changeWeatherList(state),
             ],
           ),
         ),
       ),
     );
+  }
+
+  Widget changeWeatherList(bool state) {
+    if (state == true) {
+      return Center(
+        child: Text("test"),
+      );
+    } else {
+      return Center(
+        child: Text("test1"),
+      );
+    }
   }
 }

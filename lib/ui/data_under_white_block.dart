@@ -26,6 +26,7 @@ Widget moreWeatherData(BuildContext context, MyWeatherClass snapshot) {
       width: MediaQuery.of(context).size.width * 0.70,
       height: 200,
       child: GridView.count(
+        physics: NeverScrollableScrollPhysics(),
         crossAxisSpacing: MediaQuery.of(context).size.width * 0.15,
         mainAxisSpacing: 5,
         crossAxisCount: 2,
